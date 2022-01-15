@@ -1,0 +1,73 @@
+:root{
+  --blood: #8B0000;
+  --dark: #030707;
+  --light: #1a1919;
+  --white: white;
+}
+
+html,body{
+  height: 100vh;
+  width: 100vw;
+}
+
+.calendar-screen {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.rbc-calendar {
+  height: 100%;
+}
+
+
+/* Modal */
+.ReactModalPortal > div{
+  opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  transition: opacity .2s ease-in-out;
+  z-index: 999;
+}
+
+.modal-fondo {
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: fixed;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.modal {
+  background: var(--blood);
+  border-radius: 5px;
+  color: var(--white);
+  display: inline;
+  max-height: 420px;
+  max-width: 500px;
+  outline: none;
+  padding: 10px;
+}
+
+.btnSubmit
+{
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+}
