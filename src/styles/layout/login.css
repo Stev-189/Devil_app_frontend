@@ -46,12 +46,26 @@
   border: var(--dark) solid 1px ;
   margin: 4px auto;
 }
+
+.login-form-1 .btnSubmit:hover, .cita-btn-submit:hover{
+  background-color: var(--dark);
+  color: var(--blood);
+  border: var(--blood) solid 1px ;
+}
 .login-form-2 .btnSubmit{
   background-color: var(--dark);
   color: var(--blood);
   border: var(--blood) solid 1px ;
   margin: 4px auto;
 }
+
+.login-form-2 .btnSubmit:hover{
+  background-color: var(--blood);
+  color: var(--dark);
+  border: var(--dark) solid 1px ;
+  margin: 4px auto;
+}
+
 .login-form-2 .ForgetPwd{
   color: var(--dark);
   font-weight: 600;

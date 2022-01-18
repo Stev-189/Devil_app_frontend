@@ -71,3 +71,24 @@ html,body{
   border: none;
   cursor: pointer;
 }
+
+/* FABS */
+.fab {
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  bottom: 25px;
+  font-size: 30px;
+  position: fixed;
+  right: 25px;
+  background-color: var(--blood);
+}
+
+.fab:hover {
+  background-color: var(--dark);
+  color: var(--blood);
+}
+
+.fab-delete{
+  left: 25px;
+}
