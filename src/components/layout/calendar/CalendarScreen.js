@@ -1,42 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Calendar, momentLocalizer} from 'react-big-calendar'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 
 import Navbar from '../ui/Navbar'
 import { CalendarEvent } from './CalendarEvent'
-import { calendarToEs } from '../../../helpers/calendarToEs'
 import { CalendarModal } from './CalendarModal'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'moment/locale/es'
 import { uiOpenModal } from '../../../manager/actions/uiActions'
-import { eventClearActiveEvent, eventSetActive } from '../../../manager/actions/eventsActions'
+import { eventClearActiveEvent, eventSetActive, eventStartLoading } from '../../../manager/actions/eventsActions'
 import { AddNewFab } from '../ui/AddNewFab'
 import { DeleteEventFab } from '../ui/DeleteEventFab'
 moment.locale('es')
 
 const localizer = momentLocalizer(moment)
 
-/* const events =[{
-    id: 1,
-    title: 'Cita',
-    start: moment().toDate(),
-    end: moment().add(1, 'hours').toDate(),
-    bgcolor: '#8B0000',
-    userId: "",
-    userName: "stev",
-    userEmail: "",
-    hora: "",
-    date: "",
-}]
- */
 export const CalendarScreen = () => {
 
     const dispatch = useDispatch()
     const { events, activeEvent } = useSelector(state => state.calendar)
+    const { userId } = useSelector(state => state.auth)
 
     const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week')
+
+    useEffect(() => {
+        dispatch(eventStartLoading())
+    }, [dispatch])
 
     const onDobleClick = (event) => {
         //console.log(event)
@@ -54,7 +45,7 @@ export const CalendarScreen = () => {
 
     const eventStyleGetter = (event, start, end, isSelected) => {
         const style = {
-            backgroundColor: event?.bgcolor,
+            backgroundColor: (userId===event?.userId)?"#8B0000":"#060606",
             borderRadius: '0px',
             opacity: 0.8,
             display: 'block',
@@ -77,7 +68,7 @@ export const CalendarScreen = () => {
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                messages={calendarToEs}
+                //messages={calendarToEs}
                 eventPropGetter={eventStyleGetter}
                 onDoubleClickEvent={onDobleClick}
                 onSelectEvent={onSelectEvent}

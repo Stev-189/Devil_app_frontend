@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 
 import { hoursConfig } from '../../../helpers/configBase';
 import { uiCloseModal } from '../../../manager/actions/uiActions';
-import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../../manager/actions/eventsActions';
+import { eventClearActiveEvent, eventStartAddNew, eventStartUpdate} from '../../../manager/actions/eventsActions';
 
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
@@ -30,6 +30,7 @@ export const CalendarModal = () => {
 
   const { modalOpen } = useSelector(state => state.ui);
   const { activeEvent } = useSelector(state => state.calendar);
+  const { userId, userName, userEmail } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const [cita, setCita] = useState({
@@ -39,7 +40,6 @@ export const CalendarModal = () => {
     userName: "",
     userEmail: "",
     title: "Cita",
-    bgcolor: '#8B0000',
   })
 
   useEffect(() => {
@@ -49,14 +49,13 @@ export const CalendarModal = () => {
       setCita({
         date: new Date(),
         hora: "",
-        userId: "",
-        userName: "",
-        userEmail: "",
+        userId,
+        userName,
+        userEmail,
         title: "Cita",
-        bgcolor: '#8B0000',
       })
     }
-  }, [activeEvent, setCita])
+  }, [activeEvent, setCita, userId, userName, userEmail])
 
   const handleDate=(data, name)=>{
     setCita({
@@ -89,21 +88,20 @@ export const CalendarModal = () => {
   const handleCita = (e) => {
     e.preventDefault();
     if(cita?.hora===""){
-      return Swal.fire("Error", "Seleccione una hora", "error")
+      return Swal.fire("Error", "Select Hour", "error")
     }
+    //console.log(cita);
 
     const createCita = {
       ...cita,
-      start: new Date(moment(`${moment(cita?.date).format("YYYY-MM-DD")} ${cita?.hora}:00`).format("YYYY-MM-DD HH:mm:ss")),
-      end: new Date(moment(`${moment(cita?.date).format("YYYY-MM-DD")} ${cita?.hora}:00`).add(1, "hours").format("YYYY-MM-DD HH:mm:ss")),
+      start: moment(`${moment(cita?.date).format("YYYY-MM-DD")} ${cita?.hora}:00`).format("YYYY-MM-DD HH:mm:ss"),
+      end: moment(`${moment(cita?.date).format("YYYY-MM-DD")} ${cita?.hora}:00`).add(1, "hours").format("YYYY-MM-DD HH:mm:ss"),
+      date: moment(cita?.date).format("YYYY-MM-DD HH:mm:ss"),
     }
     if(activeEvent){
-      dispatch(eventUpdated(createCita))
+      dispatch(eventStartUpdate(createCita))
     } else {
-      dispatch(eventAddNew({
-        ...createCita,
-        id: new Date().getTime(),
-      }))
+      dispatch(eventStartAddNew(createCita))
     }
     closeModal();
 
@@ -128,7 +126,7 @@ export const CalendarModal = () => {
 
             <div className="form-group pb-3">
                 <DatePicker 
-                  selected={cita?.date} 
+                  selected={new Date(cita?.date)} 
                   onChange={(e)=>handleDate(e, "date")} 
                   //customInput={<CustomInput />}
                   dateFormat="dd/MM/yyyy"
