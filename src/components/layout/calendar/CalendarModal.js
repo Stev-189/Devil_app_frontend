@@ -138,7 +138,7 @@ export const CalendarModal = () => {
                 />
             </div>
 
-            <div className="form-group pb-5 mb-5">
+            <div className="form-group pb-2 mb-2">
                 <select 
                   onChange={(e)=>handleSelect(e, "hora")}
                   className='form-control'
@@ -159,6 +159,18 @@ export const CalendarModal = () => {
 
                 </select>
             </div>
+            {
+              (activeEvent?.id) && (
+                <>
+                  <div className="form-group">
+                        <label>User: {activeEvent?.userName}</label>
+                  </div>
+                  <div className="form-group">
+                        <label>Email: {activeEvent?.userEmail}</label>
+                  </div>
+                </>
+              )
+            }
 
             <button 
                 type="submit"

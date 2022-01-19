@@ -11,8 +11,8 @@ export const LoginScreen = () => {
     const dispatch = useDispatch()
 
     const [formLoginValues, handleInputChangeLogin] = useForm({
-     lEmail: 'stev@gmail.com',
-     lPassword: 'PassPass123'
+     lEmail: '',
+     lPassword: ''
     });
 
     const { lEmail, lPassword } = formLoginValues;
@@ -29,10 +29,10 @@ export const LoginScreen = () => {
     }
 
     const [formRegisterValues, handleInputChangeRegister] = useForm({
-        rName: 'Stev',
-        rEmail: 'stev6@gmail.com',
-        rPassword: 'PassPass123',
-        rConfirmPassword: 'PassPass123'
+        rName: '',
+        rEmail: '',
+        rPassword: '',
+        rConfirmPassword: ''
     });
 
     const { rName, rEmail, rPassword, rConfirmPassword } = formRegisterValues;
